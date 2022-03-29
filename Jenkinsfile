@@ -31,9 +31,7 @@ node {
             }else{
 		    //bat "${toolbelt} plugins:install salesforcedx@49.5.0"
 		   // bat "${toolbelt} update"
-		    println 'Here'
 		    //bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
-		   rc = bat returnStatus: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:auth:logout --targetusername ${HUB_ORG} -p"
                  rc = bat returnStatus: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }
 		
@@ -52,7 +50,7 @@ node {
 				//rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 				rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 			}else{
-				rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+				rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 			   //rmsg = bat returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			}
 			  
