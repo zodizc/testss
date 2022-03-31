@@ -1,7 +1,7 @@
 #!groovy
 import groovy.json.JsonSlurperClassic
 node {
-withEnv(["MY_TOOL_DIR=${tool name: 'toolbelt', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'}"]){
+withEnv(["MY_TOOL_DIR=tool name: 'toolbelt', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'"]){
 	 def toolbelt = ${MY_TOOL_DIR}
         }
     def BUILD_NUMBER=env.BUILD_NUMBER
