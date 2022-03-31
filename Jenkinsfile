@@ -1,9 +1,6 @@
 #!groovy
 import groovy.json.JsonSlurperClassic
 node {
-withEnv(["MY_TOOL_DIR=tool name: 'toolbelt', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'"]){
-	 def toolbelt = ${MY_TOOL_DIR}
-        }
     def BUILD_NUMBER=env.BUILD_NUMBER
     def RUN_ARTIFACT_DIR="testss/${BUILD_NUMBER}"
     def SFDC_USERNAME
@@ -19,7 +16,7 @@ withEnv(["MY_TOOL_DIR=tool name: 'toolbelt', type: 'com.cloudbees.jenkins.plugin
     println HUB_ORG
     println SFDC_HOST
     println CONNECTED_APP_CONSUMER_KEY
-    //def toolbelt = tool 'toolbelt'
+    def toolbelt = env.tool 'toolbelt'
 	println '*******' 
     println toolbelt
 	println '*******' 
