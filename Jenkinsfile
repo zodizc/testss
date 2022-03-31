@@ -18,7 +18,7 @@ node {
     println CONNECTED_APP_CONSUMER_KEY
     def toolbelt = env.tool 'toolbelt'
 	println '*******' 
-    println toolbelt
+    println ${toolbelt}
 	println '*******' 
 
     stage('checkout source') {
