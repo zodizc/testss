@@ -2,6 +2,7 @@
 import groovy.json.JsonSlurperClassic
 environment {
         def toolbelt = tool 'toolbelt'
+	println toolbelt
     }
 node {
     def BUILD_NUMBER=env.BUILD_NUMBER
@@ -21,7 +22,7 @@ node {
     println CONNECTED_APP_CONSUMER_KEY
     //def toolbelt = tool 'toolbelt'
 	println '*******' 
-    println toolbelt
+    
 	println '*******' 
 
     stage('checkout source') {
