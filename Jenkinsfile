@@ -1,7 +1,9 @@
 #!groovy
 import groovy.json.JsonSlurperClassic
 node {
-
+environment {
+      TOOL = tool name: 'toolbelt', type:     'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+  }
     def BUILD_NUMBER=env.BUILD_NUMBER
     def RUN_ARTIFACT_DIR="testss/${BUILD_NUMBER}"
     def SFDC_USERNAME
