@@ -4,7 +4,9 @@ import groovy.json.JsonSlurperClassic
 node {
 	environment {
         def toolbelt = tool 'toolbelt'
+		println '*******' 
 	println toolbelt
+		println '*******' 
     }
     def BUILD_NUMBER=env.BUILD_NUMBER
     def RUN_ARTIFACT_DIR="testss/${BUILD_NUMBER}"
@@ -22,9 +24,7 @@ node {
     println SFDC_HOST
     println CONNECTED_APP_CONSUMER_KEY
     //def toolbelt = tool 'toolbelt'
-	println '*******' 
-    
-	println '*******' 
+
 
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
