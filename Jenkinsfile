@@ -2,7 +2,6 @@
 import groovy.json.JsonSlurperClassic
 
 node {
-        def toolbelt = CustomTools 'toolbelt'
     def BUILD_NUMBER=env.BUILD_NUMBER
     def RUN_ARTIFACT_DIR="testss/${BUILD_NUMBER}"
     def SFDC_USERNAME
@@ -18,7 +17,7 @@ node {
     println HUB_ORG
     println SFDC_HOST
     println CONNECTED_APP_CONSUMER_KEY
-    //def toolbelt = tool 'toolbelt'
+    def toolbelt = tool 'toolbelt'
 	println '*******' 
 	println toolbelt
 		println '*******'
