@@ -57,7 +57,7 @@ node {
 		}else{
 			rm = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
 			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:run"
-			def ind =rms.indexOf("-i")
+			println(rms.indexOf("-i"))
 			rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
