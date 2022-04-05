@@ -17,7 +17,7 @@ node {
 	println HUB_ORG
 	println SFDC_HOST
 	println CONNECTED_APP_CONSUMER_KEY
-	def toolbelt = tool 'toolbelt'
+	def toolbelt = env.toolbelt
 	println '*******' 
 	println toolbelt
 	println '*******'
