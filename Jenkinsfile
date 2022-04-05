@@ -66,7 +66,7 @@ node {
 		    println(rms)
 		startind = rms.indexOf("-i")+3
 		lastind = rms.indexOf("-u")-2
-		strid = rms.substring(startind))
+		strid = rms.substring(startind)
 		id = strid.split(" ")[0]
 		printf "end"
 		    printf rm
