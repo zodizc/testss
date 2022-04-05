@@ -17,7 +17,7 @@ node {
 	println HUB_ORG
 	println SFDC_HOST
 	println CONNECTED_APP_CONSUMER_KEY
-	def toolbelt = tool 'toolbelt'
+	def toolbelt = tool 'SFDX'
 	println '*******' 
 	println toolbelt
 	println '*******'
@@ -36,7 +36,7 @@ node {
 		//bat "${toolbelt} plugins:install salesforcedx@49.5.0"
 		//bat "${toolbelt} update"
 		//bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
-		rc = bat returnStatus: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+		//rc = bat returnStatus: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 		}
 
 		if (rc != 0) { 
@@ -54,7 +54,7 @@ node {
 			//rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		}else{
-			rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			//rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
 
