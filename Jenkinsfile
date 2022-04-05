@@ -33,9 +33,7 @@ node {
 		if (isUnix()) {
 		rc = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 		}else{
-		//bat "${toolbelt} plugins:install salesforcedx@49.5.0"
-		//bat "${toolbelt} update"
-		//bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
+		bat "${toolbelt} update"
 		rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 		}
 
@@ -62,14 +60,7 @@ node {
 		}
 
 		    printf rmsg
-		printf "run test"
 		    println(rms)
-		/*startind = rms.indexOf("-i")+3
-		lastind = rms.indexOf("-u")-2
-		strid = rms.substring(startind)
-		id = strid.split(" ")[0]
-		println(strid.split(" ")[0])*/
-		printf "end"
 		    printf rm
 		    println('Hello from a Job DSL script!')
 		    println(rmsg)
