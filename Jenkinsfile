@@ -63,7 +63,7 @@ node {
 
 		    printf rmsg
 		printf "run test"
-		    printf rms
+		    println(rms)
 		printf "end"
 		    printf rm
 		    println('Hello from a Job DSL script!')
