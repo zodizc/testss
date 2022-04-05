@@ -57,7 +57,7 @@ node {
 		}else{
 			rm = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
 			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:run"
-			ttt= rms.split(" ")[5]
+			//ttt= rms.split(" ")[5]
 			rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
@@ -65,7 +65,7 @@ node {
 		    printf rmsg
 		printf "run test"
 		    println(rms)
-		println(ttt)
+		//println(ttt)
 		printf "end"
 		    printf rm
 		    println('Hello from a Job DSL script!')
