@@ -66,7 +66,7 @@ node {
 		    println(rms)
 		println(rms.indexOf("-i")+3)
 		println(rms.indexOf("-u")-2)
-		println(rms.substring(145,150))
+		println(rms.substring(rms.indexOf("-i")+3))
 		printf "end"
 		    printf rm
 		    println('Hello from a Job DSL script!')
