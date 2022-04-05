@@ -68,7 +68,7 @@ node {
 		lastind = rms.indexOf("-u")-2
 		strid = rms.substring(startind)
 		id = strid.split(" ")[0]
-		println(id)
+		println(strid.split(" ")[0])
 		printf "end"
 		    printf rm
 		    println('Hello from a Job DSL script!')
