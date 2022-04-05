@@ -56,7 +56,7 @@ node {
 			printf "here"
 		}else{
 			rm = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
-			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:run"
+			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:run --classnames TemperatureConverterTest"
 			startind = rms.indexOf("-i")+3
 			lastind = rms.indexOf("-u")-2
 			strid = rms.substring(startind)
