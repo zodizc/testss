@@ -64,7 +64,9 @@ node {
 		    printf rmsg
 		printf "run test"
 		    println(rms)
-		println(rms.substring(rms.indexOf("-i")+3,rms.indexOf("-u")-2))
+		println(rms.indexOf("-i")+3)
+		println(rms.indexOf("-u")-2)
+		//println(rms.substring(rms.indexOf("-i")+3,rms.indexOf("-u")-2))
 		printf "end"
 		    printf rm
 		    println('Hello from a Job DSL script!')
