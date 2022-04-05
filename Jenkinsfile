@@ -1,6 +1,6 @@
 #!groovy
 import groovy.json.JsonSlurperClassic
-
+//comment
 node {
 	def BUILD_NUMBER=env.BUILD_NUMBER
 	def RUN_ARTIFACT_DIR="testss/${BUILD_NUMBER}"
