@@ -53,6 +53,7 @@ node {
 		if (isUnix()) {
 			//rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			printf "here"
 		}else{
 			rm = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
 			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:run"
