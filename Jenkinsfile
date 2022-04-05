@@ -56,12 +56,7 @@ node {
 			printf "here"
 		}else{
 			rm = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
-			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:run --classnames TemperatureConverterTest"
-			startind = rms.indexOf("-i")+3
-			lastind = rms.indexOf("-u")-2
-			strid = rms.substring(startind)
-			id = strid.split(" ")[0]
-			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:report -i "+id
+			rms = bat returnStdout: true, script:"\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:apex:test:run --classnames TemperatureConverterTest --codecoverage --resultformat human"
 			rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
