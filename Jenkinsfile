@@ -64,10 +64,10 @@ node {
 
 		    printf rmsg
 		    println(rms)
-		ind = rms.indexOf("-i")+3
+		/*ind = rms.indexOf("-i")+3
 			fid = rms.substring(ind)
 			id = fid.split(" ")[0]
-		    println(id)
+		    println(id)*/
 		    printf rm
 		    println('Hello from a Job DSL script!')
 		    //println(rmsg)
