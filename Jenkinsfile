@@ -56,17 +56,17 @@ node {
 			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mfarouq@leyton.com.devadmin\""
 			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run"
-			
-			//rmsr = bat returnStdout: true, script:"${toolbelt} force:apex:test:report -i"
+			ind = rms.indexOf("-i")+3
+			fid = rms.substring(ind)
+			id = fid.split(" ")[0]
+			rmsr = bat returnStdout: true, script:"${toolbelt} force:apex:test:report -i " +id+" -u \"mfarouq@leyton.com.devadmin\""
 			
 		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
 
 		    printf rmsg
 		    println(rms)
-		ind = rms.indexOf("-i")+3
-			fid = rms.substring(ind)
-			id = fid.split(" ")[0]
+		
 		    println(id)
 		    printf rm
 		    println('Hello from a Job DSL script!')
