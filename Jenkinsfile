@@ -55,7 +55,7 @@ node {
 		}else{
 			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mfarouq@leyton.com.devadmin\""
 			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
+			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames TemperatureConverterTest -c -r human"
 			ind = rms.indexOf("-i")+3
 			fid = rms.substring(ind)
 			id = fid.split(" ")[0]
