@@ -55,13 +55,13 @@ node {
 		}else{
 			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mfarouq@leyton.com.devadmin\""
 			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run "
+			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run -c -r human"
 			ind = rms.indexOf("-i")+3
 			fid = rms.substring(ind)
 			id = fid.split(" ")[0]
 			println(rms)
 			println '*******' 
-			rmsr = bat returnStdout: true, script:"${toolbelt} force:apex:test:report -i " +id+" -c -u \"mfarouq@leyton.com.devadmin\" -r human"
+			//rmsr = bat returnStdout: true, script:"${toolbelt} force:apex:test:report -i " +id+" -c -u \"mfarouq@leyton.com.devadmin\" -r human"
 			println '*******' 
 		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
@@ -69,7 +69,7 @@ node {
 		    printf rmsg
 		    println(rms)
 		
-		    println(rmsr)
+		    //println(rmsr)
 		    printf rm
 		    println('Hello from a Job DSL script!')
 		    //println(rmsg)
