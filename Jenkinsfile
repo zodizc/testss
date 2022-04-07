@@ -60,7 +60,7 @@ node {
 			fid = rms.substring(ind)
 			id = fid.split(" ")[0]
 			println(rms)
-			rmsr = bat returnStdout: true, script:"${toolbelt} force:apex:test:report -i " +id+" -c -u \"mfarouq@leyton.com.devadmin\" -r human"
+			rmsr = bat returnStdout: true, script:"${toolbelt} force:apex:test:report -i " +id+" -c -u \"mfarouq@leyton.com.devadmin\" -r tap"
 			
 		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
