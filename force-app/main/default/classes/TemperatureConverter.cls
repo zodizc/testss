@@ -4,4 +4,16 @@ public class TemperatureConverter {
         Decimal cs = (fh - 32) * 5/9;
         return cs.setScale(2);
     }
+     public static Decimal FahrenheitToCelsius1(Decimal fh) {
+        Decimal cs = (fh - 32) * 5/9;
+        return cs.setScale(2);
+    }
+     public static Decimal FahrenheitToCelsius2(Decimal fh) {
+        Decimal cs = (fh - 32) * 5/9;
+        return cs.setScale(2);
+    }
+     public static Decimal FahrenheitToCelsius3(Decimal fh) {
+        Decimal cs = (fh - 32) * 5/9;
+        return cs.setScale(2);
+    }
 }
