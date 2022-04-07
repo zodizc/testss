@@ -69,7 +69,7 @@ node {
 		    printf rmsg
 		    println(rms)
 		
-		    println(id)
+		    println(rmsr)
 		    printf rm
 		    println('Hello from a Job DSL script!')
 		    //println(rmsg)
