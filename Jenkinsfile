@@ -33,7 +33,7 @@ node {
 		if (isUnix()) {
 		rc = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 		}else{
-		//bat "${toolbelt} update"
+		bat "${toolbelt} update"
 		rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 		}
 
@@ -51,28 +51,16 @@ node {
 		if (isUnix()) {
 			//rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-			printf "here"
+
 		}else{
 			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mfarouq@leyton.com.devadmin\""
 			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames TemperatureConverterTest -c -r human"
-			ind = rms.indexOf("-i")+3
-			fid = rms.substring(ind)
-			id = fid.split(" ")[0]
-			println(rms)
-			println '*******' 
-			//rmsr = bat returnStdout: true, script:"${toolbelt} force:apex:test:report -i " +id+" -c -u \"mfarouq@leyton.com.devadmin\" -r human"
-			println '*******' 
-		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 		}
-
-		    printf rmsg
 		    println(rms)
-		
-		    //println(rmsr)
-		    printf rm
+		    println(rmsg)
 		    println('Hello from a Job DSL script!')
-		    //println(rmsg)
+
 		}
 	}
 }
