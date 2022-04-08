@@ -56,6 +56,7 @@ node {
 		}else{
 			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
 			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			println(rmsg)
 			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames TemperatureConverterTest -c -r human"
 		}
 		    println(rms)
