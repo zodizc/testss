@@ -6,7 +6,6 @@ node {
 	def RUN_ARTIFACT_DIR="testss/${BUILD_NUMBER}"
 	def SFDC_USERNAME
 
-	def HUB_ORG=env.HUB_ORG_DH
 	def SFDC_HOST = env.SFDC_HOST_DH
 	def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
 	def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
@@ -20,11 +19,11 @@ node {
 	def toolbelt = env.toolbelt
 	println toolbelt
 
-
 	stage('checkout source') {
 	// when running in multi-branch job, one must issue this command
-	checkout scm
+		checkout scm
 	}
+
 
 	withCredentials([file(credentialsId:JWT_KEY_CRED_ID, variable:'jwt_key_file')]) {
 		stage('Auth'){
@@ -35,33 +34,33 @@ node {
 			}
 
 			if (rc != 0) { 
-			println 'inside rc 0'
 			error 'hub org authorization failed' 
 			}
 			else{
-			println 'rc not 0'
+			println 'SFDX AUTHTICATED !'
 			}
 		}
+		
 		stage('Tests'){
 			if (isUnix()) {
-				rm = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=\"jenkinsapi@leyton.com.devadmin\""
-				rms = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
+				userAdd = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
+				testsResult = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
 
 			}else{
-				rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"jenkinsapi@leyton.com.devadmin\""
-				rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
+				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
+				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
 			}
-			println(rms)
+			println(testsResult)
 		}
 		stage('Deploy') {
 
 		if (isUnix()) {
-			rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		}else{
-			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		}
 		    
-		    println(rmsg)
+		    println(deployResult)
 
 		}
 	}
