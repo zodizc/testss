@@ -57,7 +57,7 @@ node {
 		if (isUnix()) {
 			deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		}else{
-			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG} -l RunSpecifiedTests -r \"TemperatureConverterTest,HelloAllTest\" -c"
+			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG} -l RunSpecifiedTests -r \"TemperatureConverterTest\" -c"
 		}
 		    
 		    println(deployResult)
