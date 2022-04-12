@@ -40,17 +40,6 @@ node {
 			println 'SFDX AUTHENTICATED !'
 			}
 		}
-		stage('Deploy') {
-
-		if (isUnix()) {
-			deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-		}else{
-			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-		}
-		    
-		    println(deployResult)
-
-		}
 		stage('Tests'){
 			if (isUnix()) {
 				userAdd = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
@@ -62,6 +51,18 @@ node {
 			}
 			println(testsResult)
 		}
+		stage('Deploy') {
+
+		if (isUnix()) {
+			deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+		}else{
+			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+		}
+		    
+		    println(deployResult)
+
+		}
+		
 		
 	}
 }
