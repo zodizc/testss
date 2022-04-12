@@ -7,7 +7,7 @@ node {
 	def SFDC_USERNAME
 
 	def SFDC_HOST = env.SFDC_HOST_DH
-	def SFDC_CLASSES = env.sf-classes
+	//def SFDC_CLASSES = env.sf-classes
 	def toolbelt = env.toolbelt
 
 	stage('checkout source') {
@@ -35,7 +35,7 @@ node {
 		stage('Tests'){
 			if (isUnix()) {
 				userAdd = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
-				testsResult = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
+				//testsResult = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
 
 			}else{
 				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
