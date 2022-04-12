@@ -50,8 +50,11 @@ node {
 
 		// need to pull out assigned username
 		if (isUnix()) {
-			//rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+			rm = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
 			rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			println(rmsg)
+			rms = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
+			
 
 		}else{
 			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
