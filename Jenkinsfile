@@ -42,7 +42,7 @@ node {
 			println 'rc not 0'
 			}
 		}
-		stage('tests'){
+		stage('Tests'){
 			if (isUnix()) {
 				rm = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=\"jenkinsapi@leyton.com.devadmin\""
 				rms = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
