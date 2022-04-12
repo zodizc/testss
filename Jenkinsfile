@@ -50,7 +50,7 @@ node {
 				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
 				//testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 			}
-			println(testsResult)
+			//println(testsResult)
 		}
 		stage('Deploy') {
 
