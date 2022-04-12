@@ -33,17 +33,6 @@ node {
 			println 'SFDX AUTHTICATED !'
 			}
 		}
-		stage('Tests'){
-			if (isUnix()) {
-				userAdd = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
-				testsResult = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
-
-			}else{
-				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
-				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
-			}
-			println(testsResult)
-		}
 		stage('Deploy') {
 
 		if (isUnix()) {
@@ -54,6 +43,17 @@ node {
 		    
 		    println(deployResult)
 
+		}
+		stage('Tests'){
+			if (isUnix()) {
+				userAdd = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
+				testsResult = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
+
+			}else{
+				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
+				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames ${SFDC_CLASSES} -c -r human"
+			}
+			println(testsResult)
 		}
 	}
 }
