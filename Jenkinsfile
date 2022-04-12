@@ -7,18 +7,25 @@ node {
 	def SFDC_USERNAME
 
 	def SFDC_HOST = env.SFDC_HOST_DH
-	def SFDC_CLASSES = env.SF_CLASSES
-	def toolbelt = env.toolbelt
+	def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
+	def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
 
-	println (SFDC_CLASSES)
+	println 'KEY IS' 
+	println BUILD_NUMBER
+	println JWT_KEY_CRED_ID
+	println HUB_ORG
+	println SFDC_HOST
+	println CONNECTED_APP_CONSUMER_KEY
+	def toolbelt = env.toolbelt
+	println toolbelt
+
 	stage('checkout source') {
 	// when running in multi-branch job, one must issue this command
 		checkout scm
 	}
 
-	withCredentials([file(credentialsId:'SFDX-SANDBOX-KEY', variable:'jwt_key_file'),
-	string(credentialsId: 'sf-sfdx-app-consumer-key-sandbox', variable: 'CONNECTED_APP_CONSUMER_KEY'),
-	string(credentialsId: 'sf-sfdx-user-sandbox', variable: 'HUB_ORG')]) {
+
+	withCredentials([file(credentialsId:JWT_KEY_CRED_ID, variable:'jwt_key_file')]) {
 		stage('Auth'){
 			if (isUnix()) {
 				rc = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
