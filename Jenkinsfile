@@ -25,7 +25,7 @@ node {
 	}
 
 
-	withCredentials([file(credentialsId:JWT_KEY_CRED_ID, variable:'jwt_key_file')]) {
+	withCredentials([file(credentialsId:'5ad9e141-21dc-42fe-afb2-b79dd63e6eb8', variable:'jwt_key_file')]) {
 		stage('Auth'){
 			if (isUnix()) {
 				rc = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
