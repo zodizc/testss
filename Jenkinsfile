@@ -1,6 +1,6 @@
 #!groovy
 import groovy.json.JsonSlurperClassic
-
+//comment
 node {
 	def BUILD_NUMBER=env.BUILD_NUMBER
 	def RUN_ARTIFACT_DIR="testss/${BUILD_NUMBER}"
@@ -29,14 +29,13 @@ node {
 	}
 
 	withCredentials([file(credentialsId:JWT_KEY_CRED_ID, variable:'jwt_key_file')]) {
-	stage('Deploye Code') {
+	stage('Deploy Code') {
 		if (isUnix()) {
 		rc = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 		}else{
-		//bat "${toolbelt} plugins:install salesforcedx@49.5.0"
 		//bat "${toolbelt} update"
-		//bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
-		//rc = bat returnStatus: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+			//rc = bat returnStatus: true, script: "${toolbelt} force:auth:logout --targetusername ${HUB_ORG} -p"
+		 rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 		}
 
 		if (rc != 0) { 
@@ -53,14 +52,17 @@ node {
 		if (isUnix()) {
 			//rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-		}else{
-			//rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-		   //rmsg = bat returnStdout: true, script: "\"C:\\Program Files\\sfdx\\bin\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
-		}
 
-		    printf rmsg
-		    println('Hello from a Job DSL script!')
+		}else{
+			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
+			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			println(rmsg)
+			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
+		}
+		    println(rms)
 		    println(rmsg)
+		    println('Hello from a Job DSL script!')
+
 		}
 	}
 }
