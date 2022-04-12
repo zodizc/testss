@@ -18,9 +18,7 @@ node {
 	println SFDC_HOST
 	println CONNECTED_APP_CONSUMER_KEY
 	def toolbelt = env.toolbelt
-	println '*******' 
 	println toolbelt
-	println '*******'
 
 
 	stage('checkout source') {
@@ -29,42 +27,41 @@ node {
 	}
 
 	withCredentials([file(credentialsId:JWT_KEY_CRED_ID, variable:'jwt_key_file')]) {
-	stage('Deploy Code') {
+		stage('Auth'){
+			if (isUnix()) {
+				rc = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+			}else{
+				rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+			}
+
+			if (rc != 0) { 
+			println 'inside rc 0'
+			error 'hub org authorization failed' 
+			}
+			else{
+			println 'rc not 0'
+			}
+		}
+		stage('Tests'){
+			if (isUnix()) {
+				rm = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=\"jenkinsapi@leyton.com.devadmin\""
+				rms = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
+
+			}else{
+				rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"jenkinsapi@leyton.com.devadmin\""
+				rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
+			}
+			println(rms)
+		}
+		stage('Deploy') {
+
 		if (isUnix()) {
-		rc = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-		}else{
-		//bat "${toolbelt} update"
-			//rc = bat returnStatus: true, script: "${toolbelt} force:auth:logout --targetusername ${HUB_ORG} -p"
-		 rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-		}
-
-		if (rc != 0) { 
-		println 'inside rc 0'
-		error 'hub org authorization failed' 
-		}
-		else{
-		println 'rc not 0'
-		}
-
-		println rc
-
-		// need to pull out assigned username
-		if (isUnix()) {
-			rm = sh returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
 			rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-			println(rmsg)
-			rms = sh returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
-			
-
 		}else{
-			rm = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=\"mafarouq@leyton.com.devadmin\""
 			rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-			println(rmsg)
-			rms = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest\" -c -r human"
 		}
-		    println(rms)
+		    
 		    println(rmsg)
-		    println('Hello from a Job DSL script!')
 
 		}
 	}
