@@ -48,7 +48,7 @@ node {
 
 			}else{
 				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
-				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
+				//testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 			}
 			println(testsResult)
 		}
@@ -57,7 +57,7 @@ node {
 		if (isUnix()) {
 			deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		}else{
-			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
+			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG} -r \"TemperatureConverterTest,HelloAllTest\""
 		}
 		    
 		    println(deployResult)
