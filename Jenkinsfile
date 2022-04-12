@@ -37,7 +37,7 @@ node {
 			error 'hub org authorization failed' 
 			}
 			else{
-			println 'SFDX AUTHTICATED !'
+			println 'SFDX AUTHENTICATED !'
 			}
 		}
 		
