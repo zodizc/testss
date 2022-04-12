@@ -7,9 +7,10 @@ node {
 	def SFDC_USERNAME
 
 	def SFDC_HOST = env.SFDC_HOST_DH
-	//def SFDC_CLASSES = env.sf-classes
+	def SFDC_CLASSES = env.sf-classes
 	def toolbelt = env.toolbelt
 
+	println (SFDC_CLASSES)
 	stage('checkout source') {
 	// when running in multi-branch job, one must issue this command
 		checkout scm
