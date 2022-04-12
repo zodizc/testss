@@ -7,7 +7,7 @@ node {
 	def SFDC_USERNAME
 
 	def SFDC_HOST = env.SFDC_HOST_DH
-	def SFDC_CLASSES = env.sf-classes
+	def SFDC_CLASSES = env.SF_CLASSES
 	def toolbelt = env.toolbelt
 
 	println (SFDC_CLASSES)
