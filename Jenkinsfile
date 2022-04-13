@@ -57,7 +57,7 @@ node {
 				rc = bat returnStatus: true, script: "${toolbelt} force:source:push --targetusername ciorg"
 				try{
 				testres = bat "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				}catch(err){
+				}catch(er){
 				rc = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername ciorg"    
 				//error testres
 				/*userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
