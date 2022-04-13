@@ -55,7 +55,7 @@ node {
 					error 'Salesforce test scratch org creation failed.'
 				    }
 				testres = bat "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				    println(testres)
+				    error testres
 				/*userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
 				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 				println(testsResult)*/
