@@ -50,7 +50,7 @@ node {
 			}catch(err){
 				rc = bat returnStatus: true, script: "${toolbelt} sfdx auth:logout --all"
 				rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid 3MVG9WtWSKUDG.x4A4I1E1o5ll5tjOK71TFl3t.UvNsF2btB6WTVvUfplndUVu9uHmVaQV4WfapwP8UNjJkV8 --username mafarouq@leyton.com --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl https://login.salesforce.com"
-				rc = bat "${toolbelt} force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
+				rc = bat "${toolbelt} force:org:create sourceOrg=00D200000000FFO --durationdays 1"
 				    if (rc != 0) {
 					error 'Salesforce test scratch org creation failed.'
 				    }
