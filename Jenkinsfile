@@ -48,9 +48,17 @@ node {
 			try{
 			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG} -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest"
 			}catch(err){
-				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
+				rc = command "${toolbelt} force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
+				    if (rc != 0) {
+					error 'Salesforce test scratch org creation failed.'
+				    }
+				rc = command "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
+				    if (rc != 0) {
+					error 'Salesforce unit test run in test scratch org failed.'
+				    }
+				/*userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
 				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				println(testsResult)
+				println(testsResult)*/
 			}
 		}
 		    
