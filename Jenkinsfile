@@ -48,12 +48,13 @@ node {
 			try{
 				deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG} -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest"
 			}catch(err){
-				rc = bat returnStatus: true, script: "${toolbelt} sfdx auth:logout --all"
+				rc = bat returnStatus: true, script: "${toolbelt} auth:logout --all"
 				rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid 3MVG9WtWSKUDG.x4A4I1E1o5ll5tjOK71TFl3t.UvNsF2btB6WTVvUfplndUVu9uHmVaQV4WfapwP8UNjJkV8 --username mafarouq@leyton.com --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl https://login.salesforce.com --setalias HubOrg"
 				rc = bat returnStatus: true, script: "${toolbelt} force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
 				    if (rc != 0) {
 					error 'Salesforce test scratch org creation failed.'
 				    }
+				rc = bat returnStatus: true, script: "${toolbelt} force:source:push -u mafarouq@leyton.com"
 				testres = bat "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 				    error testres
 				/*userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
