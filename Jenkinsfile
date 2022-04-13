@@ -55,12 +55,15 @@ node {
 					error 'Salesforce test scratch org creation failed.'
 				    }
 				rc = bat returnStatus: true, script: "${toolbelt} force:source:push --targetusername ciorg"
+				try{
 				testres = bat "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				//rc = bat returnStatus: true, script: "${toolbelt} auth:logout --targetusername ciorg"    
+				}catch(err){
+				rc = bat returnStatus: true, script: "${toolbelt} auth:logout --targetusername ciorg"    
 				//error testres
 				/*userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
 				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				println(testsResult)*/
+				*/error 'Deploy Failed'
+				}
 			}
 		}
 		    
