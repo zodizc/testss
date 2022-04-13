@@ -54,7 +54,7 @@ node {
 			}
 		}
 		    
-		    println(deployResult)
+		   // println(deployResult)
 
 		}
 		/*stage('Tests'){
