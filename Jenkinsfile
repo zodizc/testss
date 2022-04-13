@@ -46,7 +46,7 @@ node {
 			deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 		}else{
 			try{
-			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG} -l RunSpecifiedTests -r TemperatureConverterTest"
+			deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG} -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest"
 			}catch(err){
 				userAdd = bat returnStdout: true, script:"${toolbelt} config:set defaultusername=${HUB_ORG} "
 				testsResult = bat returnStdout: true, script:"${toolbelt} force:apex:test:run --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
