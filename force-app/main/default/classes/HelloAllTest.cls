@@ -6,7 +6,7 @@ private class HelloAllTest {
         }
         @isTest static void testFreezingPoint() {
             Decimal celsius = HelloAll.FahrenheitToCelsius(32);
-            System.assertEquals(0,celsius);
+            System.assertEquals(7,celsius);
         }
         @isTest static void testBoilingPoint() {
             Decimal celsius = HelloAll.FahrenheitToCelsius(212);        
