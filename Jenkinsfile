@@ -61,13 +61,13 @@ node {
 
 		stage('Run Tests in ScratchOrg'){
 			if (isUnix()) {
-				testres = sh "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
+				testres = sh returnStatus: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 				if (testres != 0) {
 					error 'Tests scratch org creation failed.'
 				}
 			
 			}else{
-				testres = bat "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
+				testres = bat returnStatus: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 				if (testres != 0) {
 					error 'Tests scratch org creation failed.'
 				}
