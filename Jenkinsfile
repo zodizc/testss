@@ -62,16 +62,9 @@ node {
 
 		stage('Run Tests in ScratchOrg'){
 			if (isUnix()) {
-				testres = sh returnStatus: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				if (testres != 0) {
-					error 'Tests scratch org creation failed.'
-				}
-			
+				testres = sh returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"			
 			}else{
 				testres = bat returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				/*if (testres != 0) {
-					error 'Tests scratch org failed.'
-				}*/
 			}
 		}
 
@@ -103,7 +96,8 @@ node {
 					logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
-					error 'check code coverage'
+					println testres
+					error 'Deploy fail check code coverage'
 				}
 			}else{
 				try{
@@ -112,7 +106,7 @@ node {
 					println 'Deploy succeed'
 				}catch(err){
 					println testres
-					error 'fail'
+					error 'Deploy fail check code coverage'
 				}
 			}
 		}
