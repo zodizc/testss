@@ -69,7 +69,7 @@ node {
 			}else{
 				testres = bat returnStatus: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 				if (testres != 0) {
-					error 'Tests scratch org creation failed.'
+					error 'Tests scratch org failed.'
 				}
 			}
 		}
@@ -110,7 +110,7 @@ node {
 					logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
-					error 'check code coverage'
+					error testres
 				}
 			}
 		}
