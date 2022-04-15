@@ -67,10 +67,10 @@ node {
 				}
 			
 			}else{
-				testres = bat returnStatus: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
-				if (testres != 0) {
+				testres = bat "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
+				/*if (testres != 0) {
 					error 'Tests scratch org failed.'
-				}
+				}*/
 			}
 		}
 
