@@ -110,7 +110,8 @@ node {
 					logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
-					error testres
+					println testres
+					error 'fail'
 				}
 			}
 		}
