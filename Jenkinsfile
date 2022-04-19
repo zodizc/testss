@@ -96,7 +96,7 @@ node {
 					logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
-					println testres
+					println deployResult
 					error 'Deploy fail check code coverage'
 				}
 			}else{
@@ -105,7 +105,7 @@ node {
 					logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
-					println testres
+					println deployResult
 					error 'Deploy fail check code coverage'
 				}
 			}
