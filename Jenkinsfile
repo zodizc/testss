@@ -71,7 +71,7 @@ node {
 
 		stage('Auth to SandBox'){
 			if (isUnix()) {
-				logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername ciorg"
+				logout = sh returnStatus: true, script: "echo y | ${toolbelt} force:org:delete -p -u ciorg"
 				logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
 				ogout = sh returnStatus: true, script: "echo y | ${toolbelt} force:org:list --all"
 				login = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST} --setalias SandBox"
