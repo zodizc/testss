@@ -18,6 +18,19 @@ node {
 	println SFDC_HOST
 	println CONNECTED_APP_CONSUMER_KEY
 	def toolbelt = env.toolbelt
+	def SFDC_USERNAME
+	def HUB_ORG = env.HUB_ORG_DH
+	def SFDC_HOST = env.SFDC_HOST_DH
+	def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
+	def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
+	def testres
+	def deployResult
+	println 'KEY IS' 
+	println BUILD_NUMBER
+	println JWT_KEY_CRED_ID
+	println HUB_ORG
+	println SFDC_HOST
+	println CONNECTED_APP_CONSUMER_KEY
 	println toolbelt
 
 	stage('checkout source') {
@@ -67,7 +80,7 @@ node {
 				try{
 					//Run tests in scratch org
 					testres = bat returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg -l RunAllTestsInOrg -w 20 -u mafarouq@leyton.com -c -r human"
-				}catch{
+				}catch(err){
 					//Delete Scratch org
 					logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
 					error 'Scratch org tests failed.'
