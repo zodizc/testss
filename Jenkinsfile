@@ -71,14 +71,12 @@ node {
 
 		stage('Auth to SandBox'){
 			if (isUnix()) {
-				logout = sh returnStatus: true, script: "echo y | ${toolbelt} force:org:delete -p -u ciorg"
+				logout = sh returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
 				logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
-				ogout = sh returnStatus: true, script: "echo y | ${toolbelt} force:org:list --all"
 				login = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST} --setalias SandBox"
 			}else{
-				logout = bat returnStatus: true, script: "echo y | ${toolbelt} force:org:delete -p -u ciorg"
+				logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
 				logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
-				ogout = bat returnStatus: true, script: "echo y | ${toolbelt} force:org:list --all"
 				login = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST} --setalias SandBox"
 			}
 
@@ -98,7 +96,7 @@ node {
 					logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
-					println deployResult
+					println testres
 					error 'Deploy fail check code coverage'
 				}
 			}else{
@@ -107,7 +105,7 @@ node {
 					logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
-					println deployResult
+					println testres
 					error 'Deploy fail check code coverage'
 				}
 			}
