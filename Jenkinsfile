@@ -10,7 +10,7 @@ node {
 	def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
 	def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
 	def testres
-
+	def deployResult
 	println 'KEY IS' 
 	println BUILD_NUMBER
 	println JWT_KEY_CRED_ID
