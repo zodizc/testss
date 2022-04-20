@@ -72,7 +72,7 @@ node {
 			}else{
 				try{
 					//Run tests in scratch org
-					testres = bat returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg -l RunAllTestsInOrg -w 20 -u mafarouq@leyton.com -c -r human"
+					testres = bat returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 				}catch(err){
 					//Delete Scratch org
 					logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
