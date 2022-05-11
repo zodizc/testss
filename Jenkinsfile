@@ -33,7 +33,7 @@ node {
 
 
 	withCredentials([file(credentialsId:'5ad9e141-21dc-42fe-afb2-b79dd63e6eb8', variable:'jwt_key_file')]) {
-		/*stage('Create ScratchOrg'){
+		stage('Create ScratchOrg'){
 			if (isUnix()) {
 				login = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid 3MVG9WtWSKUDG.x4A4I1E1o5ll5tjOK71TFl3t.UvNsF2btB6WTVvUfplndUVu9uHmVaQV4WfapwP8UNjJkV8 --username mafarouq@leyton.com --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl https://login.salesforce.com --setalias HubOrg"
 				scratchorg = sh returnStatus: true, script: "${toolbelt} force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
@@ -81,15 +81,15 @@ node {
 			}
 		}
 
-*/
+
 		stage('Auth to SandBox'){
 			if (isUnix()) {
-				//logout = sh returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
-				//logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
+				logout = sh returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
+				logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
 				login = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST} --setalias SandBox"
 			}else{
-				//logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
-				//logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
+				logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
+				logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
 				login = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST} --setalias SandBox"
 			}
 
