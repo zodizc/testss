@@ -114,7 +114,7 @@ node {
 				}
 			}else{
 				try{
-					deployResult = bat returnStatus: true, script: "${toolbelt} force:apex:test:run -l RunLocalTests -u mafarouq@leyton.com.isoprod2 -c -r human -d C:\\Users\\mafarouq\\Desktop\\test_report4"
+					deployResult = bat returnStatus: true, script: "${toolbelt} force:apex:test:run -l RunLocalTests -u mafarouq@leyton.com.isoprod2 -c -r human -d C:\\Users\\mafarouq\\Desktop\\test_report40"
 					logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
