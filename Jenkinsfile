@@ -73,6 +73,7 @@ node {
 				try{
 					//Run tests in scratch org
 					testres = bat returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
+					println testres
 				}catch(err){
 					//Delete Scratch org
 					logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
@@ -115,6 +116,7 @@ node {
 			}else{
 				try{
 					deployResult = bat returnStatus: true, script: "${toolbelt} force:apex:test:run -l RunLocalTests -u mafarouq@leyton.com.isoprod2 -c -r human -d C:\\Users\\mafarouq\\Desktop\\testReport40"
+					println  deployResult
 					logout = bat returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox "
 					println 'Deploy succeed'
 				}catch(err){
