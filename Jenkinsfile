@@ -86,7 +86,7 @@ node {
 		}
 
 
-		stage('Build docker images'){
+		stage('Build docker image'){
 			if (isUnix()) {
 				//logout = sh returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
 				//logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
@@ -106,7 +106,7 @@ node {
 		}
 
 
-		stage('Push docker images') {
+		stage('Push docker image') {
 			if (isUnix()) {
 				try{
 					deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u mafarouq@leyton.com.isoprod2 -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest"
