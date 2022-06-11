@@ -33,7 +33,7 @@ node {
 
 
 	withCredentials([file(credentialsId:'5ad9e141-21dc-42fe-afb2-b79dd63e6eb8', variable:'jwt_key_file')]) {
-		stage('Create ScratchOrg'){
+		stage('Pull Docker image'){
 			if (isUnix()) {
 				login = sh returnStatus: true, script: "${toolbelt} update stable-rc"
 				login = sh returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid 3MVG9WtWSKUDG.x4A4I1E1o5ll5tjOK71TFl3t.UvNsF2btB6WTVvUfplndUVu9uHmVaQV4WfapwP8UNjJkV8 --username mafarouq@leyton.com --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl https://login.salesforce.com --setalias HubOrg"
@@ -43,7 +43,7 @@ node {
 				}
 			
 			}else{
-				login = bat returnStatus: true, script: "${toolbelt} update stable-rc"
+				//login = bat returnStatus: true, script: "${toolbelt} update stable-rc"
 				login = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid 3MVG9WtWSKUDG.x4A4I1E1o5ll5tjOK71TFl3t.UvNsF2btB6WTVvUfplndUVu9uHmVaQV4WfapwP8UNjJkV8 --username mafarouq@leyton.com --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl https://login.salesforce.com --setalias HubOrg"
 				scratchorg = bat returnStatus: true, script: "${toolbelt} force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
 				if (scratchorg != 0) {
@@ -53,7 +53,7 @@ node {
 		}
 
 
-		stage('Deploy to ScratchOrg'){
+		/*stage('Deploy to ScratchOrg'){
 			if (isUnix()) {
 				push = sh returnStatus: true, script: "${toolbelt} force:source:push --targetusername ciorg"
 				if (push != 0) {
@@ -76,17 +76,17 @@ node {
 					//Run tests in scratch org
 					testres = bat returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 					println testres
-					deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u mafarouq@leyton.com.isoprod2 -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest7"
+					//deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u mafarouq@leyton.com.isoprod2 -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest7"
 				}catch(err){
 					//Delete Scratch org
 					logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
 					error 'Scratch org tests failed.'
 				}
 			}
-		}
+		}*/
 
 
-		stage('Build docker image'){
+		stage('Stop old containers'){
 			if (isUnix()) {
 				//logout = sh returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
 				//logout = sh returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg"
@@ -106,7 +106,7 @@ node {
 		}
 
 
-		stage('Push docker image') {
+		stage('Build docker containers') {
 			if (isUnix()) {
 				try{
 					deployResult = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u mafarouq@leyton.com.isoprod2 -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest"
