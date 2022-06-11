@@ -76,6 +76,7 @@ node {
 					//Run tests in scratch org
 					testres = bat returnStdout: true, script: "${toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human"
 					println testres
+					deployResult = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u mafarouq@leyton.com.isoprod2 -l RunSpecifiedTests -r TemperatureConverterTest,HelloAllTest7"
 				}catch(err){
 					//Delete Scratch org
 					logout = bat returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg"
