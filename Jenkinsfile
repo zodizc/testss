@@ -85,7 +85,7 @@ pipeline {
                         }else{
                              try{
                                 //Run tests in scratch org
-                                testres = bat (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername SandBox --wait 10 -l RunAllTestsInOrg -c -r human -d \"C:\\Users\\mafarouq\\Desktop\\testReport\"")
+                                testres = bat (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername SandBox --wait 10 -l RunAllTestsInOrg -c -r human -d \"C:\\Users\\mafarouq\\Desktop\"")
                             }catch(err){
                                 //Delete Scratch org
                                 logout = bat (returnStdout: true, script: "${env.toolbelt} force:org:delete -p -u ciorg")
