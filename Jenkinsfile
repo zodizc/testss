@@ -104,14 +104,14 @@ pipeline {
                             //Log out from Prod
                             logout = sh (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg")
                             //Log in to SandBox
-                            slogin = sh (returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${env.CONNECTED_APP_CONSUMER_KEY_DH} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${sandbox_jwt_key_file} --setdefaultdevhubusername --instanceurl https://test.salesforce.com --setalias SandBox")
+                            slogin = sh (returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${env.CONNECTED_APP_CONSUMER_KEY_DH} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl https://test.salesforce.com --setalias SandBox")
                         }else{
                             //Delete Scratch org
                             logout = bat (returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg")
                             //Log out from Prod
                             logout = bat (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg")
                             //Log in to SandBox
-                            slogin = bat (returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${env.CONNECTED_APP_CONSUMER_KEY_DH} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${sandbox_jwt_key_file} --setdefaultdevhubusername --instanceurl https://test.salesforce.com --setalias SandBox")
+                            slogin = bat (returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${env.CONNECTED_APP_CONSUMER_KEY_DH} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl https://test.salesforce.com --setalias SandBox")
                         }
                     }
                 }
