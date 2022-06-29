@@ -29,7 +29,7 @@ pipeline {
                             //update Salesforce CLI
                             update = bat(script: "${env.toolbelt} update stable-rc")
                             //Login to Prod using connected app consumer key, user name, prod url and OpenSSL certificate and key
-                            login = bat(returnStatus: true, script: "${env.toolbelt} auth:jwt:grant --clientid 3MVG9WtWSKUDG.x4A4I1E1o5ll5tjOK71TFl3t.UvNsF2btB6WTVvUfplndUVu9uHmVaQV4WfapwP8UNjJkV8 --username mafarouq@leyton.com --jwtkeyfile ${jwt_key_file} --loglevel DEBUG --setdefaultdevhubusername --instanceurl https://login.salesforce.com --setalias HubOrg")
+                            login = bat(returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${env.CONNECTED_APP_CONSUMER_KEY_DH} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl https://test.salesforce.com --setalias SandBox")
                             //Create scratchOrg from Prod
                             //scratchOrg = bat(returnStatus: true, script: "${env.toolbelt} force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1")
                             /*if (scratchOrg != 0) {
@@ -85,7 +85,7 @@ pipeline {
                         }else{
                              try{
                                 //Run tests in scratch org
-                                testres = bat (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername HubOrg --wait 10 -l RunAllTestsInOrg -c -r human -d \"C:\\Users\\mafarouq\\Desktop\\testReport\"")
+                                testres = bat (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername SandBox --wait 10 -l RunAllTestsInOrg -c -r human -d \"C:\\Users\\mafarouq\\Desktop\\testReport\"")
                             }catch(err){
                                 //Delete Scratch org
                                 logout = bat (returnStdout: true, script: "${env.toolbelt} force:org:delete -p -u ciorg")
@@ -153,4 +153,3 @@ pipeline {
             }
         }
     }
-
