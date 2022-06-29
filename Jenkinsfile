@@ -1,12 +1,7 @@
 pipeline {
     agent any
     stages {
-        withCredentials([file(credentialsId:'SFDX-SANDBOX-KEY', variable:'sandbox_jwt_key_file'),
-        file(credentialsId:'SFDX-PRODUCTION-KEY', variable:'production_jwt_key_file'),
-        string(credentialsId: 'sf-sfdx-app-consumer-key-sandbox', variable: 'SANDBOX_CONNECTED_APP_CONSUMER_KEY'),
-        string(credentialsId: 'sf-sfdx-user-sandbox', variable: 'SANDBOX_USER'),
-        string(credentialsId: 'sf-sfdx-app-consumer-key-production', variable: 'PROD_CONNECTED_APP_CONSUMER_KEY'),
-        string(credentialsId: 'sf-sfdx-user-production', variable: 'PROD_USER')]) {
+    withCredentials([file(credentialsId:'5ad9e141-21dc-42fe-afb2-b79dd63e6eb8', variable:'jwt_key_file')]) {
             stage('checkout source') {
                 steps {
                     checkout scm
