@@ -49,9 +49,23 @@ pipeline {
                 steps {
                     script {
                         if (isUnix()) {
-
+                            try{
+                                //Push changes from Git Lab to scratch org
+                                push = sh (returnStatus: true, script: "${env.toolbelt} force:source:push --targetusername ciorg")
+                            }catch(err){
+                                //Delete Scratch org
+                                logout = sh (returnStatus: true, script: "${env.toolbelt} force:org:delete -p -u ciorg")
+                                error 'Push to scratch org creation failed.'
+                            }
                         }else{
-
+                             try{
+                                //Push changes from Git Lab to scratch org
+                                push = bat (returnStatus: true, script: "${env.toolbelt} force:source:push --targetusername ciorg")
+                            }catch(err){
+                                //Delete Scratch org
+                                logout = bat (returnStatus: true, script: "${env.toolbelt} force:org:delete -p -u ciorg")
+                                error 'Push to scratch org creation failed.'
+                            } 
                         }
                     }
                 }
@@ -60,9 +74,23 @@ pipeline {
                 steps {
                     script {
                         if (isUnix()) {
-
+                            try{
+                                //Run tests in scratch org
+                                testres = sh (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human")
+                            }catch(err){
+                                //Delete Scratch org
+                                logout = sh (returnStdout: true, script: "${env.toolbelt} force:org:delete -p -u ciorg")
+                                error 'Scratch org tests failed.'
+                            }
                         }else{
-
+                             try{
+                                //Run tests in scratch org
+                                testres = bat (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human")
+                            }catch(err){
+                                //Delete Scratch org
+                                logout = bat (returnStdout: true, script: "${env.toolbelt} force:org:delete -p -u ciorg")
+                                error 'Scratch org tests failed.'
+                            }
                         }
                     }
                 }
@@ -70,10 +98,20 @@ pipeline {
             stage('Auth to SandBox') {
                 steps {
                     script {
-                       if (isUnix()) {
-
+                        if (isUnix()) {
+                            //Delete Scratch org
+                            logout = sh (returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg")
+                            //Log out from Prod
+                            logout = sh (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg")
+                            //Log in to SandBox
+                            slogin = sh (returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${env.CONNECTED_APP_CONSUMER_KEY_DH} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${sandbox_jwt_key_file} --setdefaultdevhubusername --instanceurl https://test.salesforce.com --setalias SandBox")
                         }else{
-
+                            //Delete Scratch org
+                            logout = bat (returnStatus: true, script: "${toolbelt} force:org:delete -p -u ciorg")
+                            //Log out from Prod
+                            logout = bat (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername HubOrg")
+                            //Log in to SandBox
+                            slogin = bat (returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${env.CONNECTED_APP_CONSUMER_KEY_DH} --username mafarouq@leyton.com.isoprod2 --jwtkeyfile ${sandbox_jwt_key_file} --setdefaultdevhubusername --instanceurl https://test.salesforce.com --setalias SandBox")
                         }
                     }
                 }
@@ -82,9 +120,33 @@ pipeline {
                 steps {
                     script {
                         if (isUnix()) {
-
+                            try{
+                                //Deploy and check code coverage in SandBox
+                                deployResult = sh (returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u mafarouq@leyton.com.isoprod2 -l RunSpecifiedTests -r \"TemperatureConverterTest,HelloAllTest\"")
+                                //Log out from SnadBox
+                                logout = sh (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox ")
+                                println 'Deploy succeed.'
+                            }catch(err){
+                                //Show tests result if deploy fail
+                                println testres
+                                //Log out from SnadBox
+                                logout = sh (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox ")
+                                error 'Deploy failed.'
+                            }
                         }else{
-
+                            try{
+                                //Deploy and check code coverage in SandBox
+                                deployResult = bat (returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u mafarouq@leyton.com.isoprod2 -l RunSpecifiedTests -r \"TemperatureConverterTest,HelloAllTest\"")
+                                //Log out from SnadBox
+                                logout = bat (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox ")
+                                println 'Deploy succeed.'
+                            }catch(err){
+                                //Show tests result if deploy fail
+                                println testres
+                                //Log out from SnadBox
+                                logout = bat (returnStatus: true, script: "echo y | ${toolbelt} auth:logout --targetusername SandBox ")
+                                error 'Deploy failed.'
+                            }
                         }
                     }
                 }
