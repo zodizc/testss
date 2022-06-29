@@ -1,6 +1,7 @@
+withCredentials([file(credentialsId:'5ad9e141-21dc-42fe-afb2-b79dd63e6eb8', variable:'jwt_key_file')]) {
 pipeline {
     agent any
-    withCredentials([file(credentialsId:'5ad9e141-21dc-42fe-afb2-b79dd63e6eb8', variable:'jwt_key_file')]) {
+    
     stages {
    
             stage('checkout source') {
