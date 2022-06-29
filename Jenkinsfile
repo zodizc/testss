@@ -1,6 +1,9 @@
-withCredentials([file(credentialsId:'5ad9e141-21dc-42fe-afb2-b79dd63e6eb8', variable:'jwt_key_file')]) {
+
 pipeline {
     agent any
+    environment {
+        jwt_key_file = credentials('5ad9e141-21dc-42fe-afb2-b79dd63e6eb8')  
+    }
     
     stages {
    
@@ -88,4 +91,4 @@ pipeline {
             }
         }
     }
-}
+
