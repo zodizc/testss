@@ -76,7 +76,7 @@ pipeline {
                         if (isUnix()) {
                             try{
                                 //Run tests in scratch org
-                                testres = sh (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername ciorg --wait 10 --classnames \"TemperatureConverterTest,HelloAllTest\" -c -r human")
+                                testres = sh (returnStdout: true, script:"${env.toolbelt} force:apex:test:run --targetusername ciorg --wait 10 -l RunAllTestsInOrg -c -r human -d \"C:\\Users\\mafarouq\\Desktop\\testReport\"")
                             }catch(err){
                                 //Delete Scratch org
                                 logout = sh (returnStdout: true, script: "${env.toolbelt} force:org:delete -p -u ciorg")
